@@ -1,0 +1,34 @@
+frame = tk.Frame(root, bg="lightgray", borderwidth=2, relief="groove", width=200, height=150,
+                 highlightbackground="black", highlightcolor="red", highlightthickness=3,
+                 cursor="hand2", takefocus=True, padx=10, pady=5)
+
+                 button = tk.Button(root, text="Klik Saya", command=lambda: print("Tombol ditekan"), width=10,
+                 bg="lightblue", fg="white", font=("Arial", 12), relief="raised", cursor="hand2", state="normal")
+entry = tk.Entry(root, width=30, bg="lightgray", fg="black", font=("Arial", 12), justify="left",
+                 state="normal", show="*")
+
+                 .labelStyle {
+                  -fx-font-family: Arial, sans-serif;
+                  -fx-font-size: 12px;
+                  -fx-background-color: lightblue;
+                  -fx-text-fill: white;
+                  -fx-padding: 5px;
+              }
+              
+              .buttonStyle {
+                  -fx-font-family: Arial, sans-serif;
+                  -fx-font-size: 12px;
+                  -fx-background-color: lightgray;
+                  -fx-text-fill: black;
+                  -fx-padding: 5px 10px;
+              }
+              
+              .textFieldStyle {
+                  -fx-font-family: Arial, sans-serif;
+                  -fx-font-size: 12px;
+                  -fx-background-color: white;
+                  -fx-text-fill: black;
+                  -fx-padding: 5px;
+                  -fx-border-color: gray;
+                  -fx-border-width: 1px;
+              }
