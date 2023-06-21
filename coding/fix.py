@@ -8,43 +8,63 @@ import tkinter.ttk as ttk
 from PIL import Image, ImageTk
 import customtkinter
 
-customtkinter.set_appearance_mode("DARK")
-customtkinter.set_default_color_theme("dark-blue")
-
 # Konfigurasi FTP
 ftp_host = '127.0.0.1'
 ftp_port = 21
+
+import tkinter as tk
+from ftplib import FTP
+from tkinter import messagebox
 
 class LoginWindow:
     def __init__(self, root):
         self.root = root
         self.root.title('Login')
-        self.root.geometry('700x500')
+        self.root.geometry('800x700')
 
-        frame = tk.Frame(root, bg='#636363', borderwidth=15, relief="raised", takefocus=True)
-        frame.place(relx=0.5, rely=0.5, anchor='center')
+        image = Image.open('background7.jpg')
+        image = image.resize((800, 700), Image.ANTIALIAS)
+        self.bg_image = ImageTk.PhotoImage(image)
+        bg_label = ttk.Label(root, image=self.bg_image)
+        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-        label_title = tk.Label(self.root, text="RUKONT FTP CLIENT", font=("georgia", 32, "bold"), bg="#636363", fg="white")
-        label_title.place(relx=0.5, rely=0.3, anchor="center")
 
-        label_username = tk.Label(frame, text='Username:', font=('roboto', 12), bd=0, bg='#636363', fg='white')
-        label_username.grid(row=0, column=0, padx=5, pady=5)
+        # frame = tk.Frame(root, bg='#7c39f0', borderwidth=15, relief="raised", takefocus=True)
+        # frame.place(relx=0.8, rely=0.5, anchor='center')
 
-        self.entry_username = tk.Entry(frame, font=('roboto', 12), cursor="ibeam")
-        self.entry_username.grid(row=0, column=1, padx=5, pady=5)
+        # label_title = tk.Label(self.root, text="FTP CLIENT", font=("georgia", 32, "bold"), bg="#95aeee", fg="#3b8de4")
+        # label_title.place(relx=0.8, rely=0.3, anchor="center")
 
-        label_password = tk.Label(frame, text='Password:', font=('roboto', 12), bd=0, bg='#636363', fg='white')
-        label_password.grid(row=1, column=0, padx=5, pady=5)
+        label_username = tk.Label(root, text='Username:', font=('roboto', 12), bd=0, bg='#95aeee', fg='black')
+        label_username.place(relx=0.8, rely=0.43, anchor="center")
 
-        self.entry_password = tk.Entry(frame, show='*', font=('roboto', 12), cursor="ibeam")
-        self.entry_password.grid(row=1, column=1, padx=5, pady=5)
+        self.entry_username = tk.Entry(root, font=('roboto', 12), cursor="ibeam")
+        self.entry_username.place(relx=0.8, rely=0.46, anchor="center")
 
-        login_button = tk.Button(frame, text='Login', command=self.login, font=('roboto', 12), relief="raised", background="grey")
-        login_button.grid(row=2, column=0, columnspan=2, padx=5, pady=10)
+        label_password = tk.Label(root, text='Password:', font=('roboto', 12), bd=0, bg='#95aeee', fg='black')
+        label_password.place(relx=0.8, rely=0.5, anchor="center")
+
+        self.entry_password = tk.Entry(root, show='*', font=('roboto', 12), cursor="ibeam")
+        self.entry_password.place(relx=0.8, rely=0.54, anchor="center")
+
+        self.login_button = tk.Button(root, text='Login', command=self.login, font=('roboto', 12), relief="raised", fg="#7561EB",background="#5380DE", bd=5, state=tk.DISABLED, highlightbackground="white")
+        self.login_button.place(relx=0.8, rely=0.6, anchor="center")
+
+        self.entry_username.bind("<KeyRelease>", self.check_input)
+        self.entry_password.bind("<KeyRelease>", self.check_input)
+
+    def check_input(self, event):
+        if self.entry_username.get() and self.entry_password.get():
+            self.login_button.config(state=tk.NORMAL)
+        else:
+            self.login_button.config(state=tk.DISABLED)
 
     def login(self):
         username = self.entry_username.get()
         password = self.entry_password.get()
+
+        # username = "shaff"
+        # password = "shaffole"
 
         ftp = FTP()
         try:
@@ -55,43 +75,51 @@ class LoginWindow:
         except:
             messagebox.showerror('Login Failed', 'Failed to connect to the FTP server.')
 
+
 class FTPClientApp:
     def __init__(self, ftp):
         self.ftp = ftp
 
 
-        self.root = customtkinter.CTk()
+        self.root = tk.Tk()
         self.root.title('File Directory')
-        self.root.geometry('700x500')
+        self.root.geometry('800x700')
 
-        # frame = tk.Frame(self.root, bg='#636363', borderwidth=15, relief="raised", height=20, width=50)
-        # frame.place(relx=0.5, rely=0.5, anchor='center')
+        frame_label = tk.Frame(self.root,bg='#636363', borderwidth=15, relief="raised" )
+        frame_label.pack(pady=70)
 
-        label = tk.Label(self.root, text='List of Files in Server', font=('roboto', 32))
-        # label.grid(row=0, column=1, sticky=tk.N)
+        frame_tabel = tk.Frame(self.root, bg='#636363', borderwidth=15, relief="raised")
+        frame_tabel.pack()
 
-        self.treeview = ttk.Treeview(self.root, columns=('Name', 'Size'), show='headings', height=20)
+        frame_button = tk.Frame(self.root, bg = "#636363", borderwidth=5, relief="solid" )
+        frame_button.pack(pady=10, ipadx=20,ipady=10)
+
+        label = tk.Label(frame_label, text='List of Files in Server', font=('roboto', 32, "bold"))
+        label.pack()
+
+        self.treeview = ttk.Treeview(frame_tabel, columns=('Name', 'Size'), show='headings', height=20)
         self.treeview.heading('Name', text='Name', anchor="center")
         self.treeview.heading('Size', text='Size', anchor="center")
-        self.treeview.pack(expand=True)
+        self.treeview.pack()
         self.treeview.column('Name', width=500, anchor="center")
         self.treeview.column('Size', width=200, anchor="center")
 
-        upload_button = tk.Button(self.root, text='Upload File', command=self.upload_file, font=('roboto', 12), bd=0, bg='#1F6E8C', fg='white')
-        upload_button.place(relx=0.5)
-        upload_button.pack(expand=True)
 
-        # download_button = tk.Button(self.root, text='Download File', command=self.download_file, font=('roboto', 12), bd=0, bg='#1F6E8C', fg='white')
-        # download_button.place(x=450, y=150)
+        upload_button = tk.Button(frame_button, text='Upload File', command=self.upload_file, font=('roboto', 12,"bold"), bd=5, bg='grey', fg='white',relief="raised")
+        upload_button.pack(side='left',expand=True)
 
-        # delete_button = tk.Button(self.root, text='Delete File', command=self.delete_file, font=('roboto', 12), bd=0, bg='#1F6E8C', fg='white')
-        # delete_button.place(x=450, y=200)
+        download_button = tk.Button(frame_button, text='Download File', command=self.download_file, font=('roboto', 12,"bold"), bd=5, bg='grey', fg='white', relief="raised")
+        download_button.pack(side='left',expand=True)
 
-        # rename_button = tk.Button(self.root, text='Rename File', command=self.rename_file, font=('roboto', 12), bd=0, bg='#1F6E8C', fg='white')
-        # rename_button.place(x=450, y=250)
+        delete_button = tk.Button(frame_button, text='Delete File', command=self.delete_file, font=('roboto', 12,"bold"), bd=5, bg='grey', fg='white',relief="raised")
+        delete_button.pack(side='left',expand=True)
 
-        # back_button = tk.Button(self.root, text='Logout', command=self.back_to_login, font=('roboto', 12), bd=0, bg='#1F6E8C', fg='white')
-        # back_button.place(x=10, y=430)
+        rename_button = tk.Button(frame_button, text='Rename File', command=self.rename_file, font=('roboto', 12,"bold"), bd=5, bg='grey', fg='white',relief="raised")
+        rename_button.pack(side='left',expand=True)
+
+        back_button = tk.Button(frame_button, text='Logout', command=self.back_to_login, font=('roboto', 12,"bold"), bd=5, bg='grey', fg='white')
+        back_button.pack(side='left',expand=True)
+        
 
         self.refresh_file_list()
 
@@ -154,7 +182,7 @@ class FTPClientApp:
     def back_to_login(self):
         self.ftp.quit()
         self.root.destroy()
-        root = customtkinter.CTk()
+        root = tk.Tk()
         login_window = LoginWindow(root)
         root.mainloop()
 
@@ -163,7 +191,7 @@ class FTPClientApp:
         self.root.destroy()
 
 def main():
-    root = customtkinter.CTk()
+    root = tk.Tk()
     login_window = LoginWindow(root)
     root.mainloop()
 
