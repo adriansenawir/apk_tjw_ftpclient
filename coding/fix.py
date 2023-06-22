@@ -29,12 +29,6 @@ class LoginWindow:
         bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
 
-        # frame = tk.Frame(root, bg='#7c39f0', borderwidth=15, relief="raised", takefocus=True)
-        # frame.place(relx=0.8, rely=0.5, anchor='center')
-
-        # label_title = tk.Label(self.root, text="FTP CLIENT", font=("georgia", 32, "bold"), bg="#95aeee", fg="#3b8de4")
-        # label_title.place(relx=0.8, rely=0.3, anchor="center")
-
         label_username = tk.Label(root, text='Username:', font=('roboto', 12), bd=0, bg='#95aeee', fg='black')
         label_username.place(relx=0.8, rely=0.43, anchor="center")
 
@@ -60,11 +54,8 @@ class LoginWindow:
             self.login_button.config(state=tk.DISABLED)
 
     def login(self):
-        # username = self.entry_username.get()
-        # password = self.entry_password.get()
-
-        username = "shaff"
-        password = "shaffole"
+        username = self.entry_username.get()
+        password = self.entry_password.get()
 
         ftp = FTP()
         try:
