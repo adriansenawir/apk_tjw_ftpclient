@@ -18,6 +18,6 @@ entry = tk.Entry(root, width=30, bg="lightgray", fg="black", font=("Arial", 12),
               .buttonStyle {
                   -fx-font-family: Arial, sans-serif;
                   -fx-font-size: 12px;
-                  -fx-background-color: #5380DE;
+                  -fx-background-color: #9747ff;
                   -fx-text-fill: black;
     

@@ -47,7 +47,7 @@ class LoginWindow:
         self.entry_password = tk.Entry(root, show='*', font=('roboto', 12), cursor="ibeam")
         self.entry_password.place(relx=0.8, rely=0.54, anchor="center")
 
-        self.login_button = tk.Button(root, text='Login', command=self.login, font=('roboto', 12), relief="raised", fg="#7561EB",background="#5380DE", bd=5, state=tk.DISABLED, highlightbackground="white")
+        self.login_button = tk.Button(root, text='Login', command=self.login, font=('roboto', 12, "bold"), fg="white",relief="raised",background="#5380DE", bd=5, state=tk.DISABLED)
         self.login_button.place(relx=0.8, rely=0.6, anchor="center")
 
         self.entry_username.bind("<KeyRelease>", self.check_input)
@@ -60,11 +60,11 @@ class LoginWindow:
             self.login_button.config(state=tk.DISABLED)
 
     def login(self):
-        username = self.entry_username.get()
-        password = self.entry_password.get()
+        # username = self.entry_username.get()
+        # password = self.entry_password.get()
 
-        # username = "shaff"
-        # password = "shaffole"
+        username = "shaff"
+        password = "shaffole"
 
         ftp = FTP()
         try:
@@ -82,16 +82,17 @@ class FTPClientApp:
 
 
         self.root = tk.Tk()
+        self.root.configure(bg="#95AEEE")
         self.root.title('File Directory')
         self.root.geometry('800x700')
 
-        frame_label = tk.Frame(self.root,bg='#636363', borderwidth=15, relief="raised" )
-        frame_label.pack(pady=70)
+        frame_label = tk.Frame(self.root,bg='#987eff', borderwidth=15, relief="raised" )
+        frame_label.pack()
 
-        frame_tabel = tk.Frame(self.root, bg='#636363', borderwidth=15, relief="raised")
+        frame_tabel = tk.Frame(self.root, bg='#987eff', borderwidth=15, relief="raised")
         frame_tabel.pack()
 
-        frame_button = tk.Frame(self.root, bg = "#636363", borderwidth=5, relief="solid" )
+        frame_button = tk.Frame(self.root, bg = "#9747ff", highlightbackground="white", highlightcolor="white", highlightthickness=10, relief="solid" )
         frame_button.pack(pady=10, ipadx=20,ipady=10)
 
         label = tk.Label(frame_label, text='List of Files in Server', font=('roboto', 32, "bold"))
@@ -105,19 +106,19 @@ class FTPClientApp:
         self.treeview.column('Size', width=200, anchor="center")
 
 
-        upload_button = tk.Button(frame_button, text='Upload File', command=self.upload_file, font=('roboto', 12,"bold"), bd=5, bg='grey', fg='white',relief="raised")
+        upload_button = tk.Button(frame_button, text='Upload File', command=self.upload_file, font=('roboto', 12,"bold"), bd=5, bg='#5380DE', fg='white',relief="raised")
         upload_button.pack(side='left',expand=True)
 
-        download_button = tk.Button(frame_button, text='Download File', command=self.download_file, font=('roboto', 12,"bold"), bd=5, bg='grey', fg='white', relief="raised")
+        download_button = tk.Button(frame_button, text='Download File', command=self.download_file, font=('roboto', 12,"bold"), bd=5, bg='#5380DE', fg='white', relief="raised")
         download_button.pack(side='left',expand=True)
 
-        delete_button = tk.Button(frame_button, text='Delete File', command=self.delete_file, font=('roboto', 12,"bold"), bd=5, bg='grey', fg='white',relief="raised")
+        delete_button = tk.Button(frame_button, text='Delete File', command=self.delete_file, font=('roboto', 12,"bold"), bd=5, bg='#5380DE', fg='white',relief="raised")
         delete_button.pack(side='left',expand=True)
 
-        rename_button = tk.Button(frame_button, text='Rename File', command=self.rename_file, font=('roboto', 12,"bold"), bd=5, bg='grey', fg='white',relief="raised")
+        rename_button = tk.Button(frame_button, text='Rename File', command=self.rename_file, font=('roboto', 12,"bold"), bd=5, bg='#5380DE', fg='white',relief="raised")
         rename_button.pack(side='left',expand=True)
 
-        back_button = tk.Button(frame_button, text='Logout', command=self.back_to_login, font=('roboto', 12,"bold"), bd=5, bg='grey', fg='white')
+        back_button = tk.Button(frame_button, text='Logout', command=self.back_to_login, font=('roboto', 12,"bold"), bd=5, bg='#5380DE', fg='white')
         back_button.pack(side='left',expand=True)
         
 
